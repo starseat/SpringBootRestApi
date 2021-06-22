@@ -21,8 +21,10 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("Spring API Document")
                 .description("API 연동 문서입니다.")
-                .license("starseat")
-                .licenseUrl("http://starseat.net")
+//                .license("starseat")
+//                .licenseUrl("http://starseat.net")
+                .license("Apache 2.0")
+                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .version("0.0.1")
                 .build()
         ;
@@ -52,12 +54,12 @@ public class SwaggerConfig {
                 .select()
 
                 // Swagger API 문서로 만들기 원하는 basePackage 경로입니다. (필수)
-                //.apis(RequestHandlerSelectors.basePackage("com.rest.api.controller"))
-                .apis(RequestHandlerSelectors.any())
+                //.apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.rest.api.controller"))
 
                 // URL 경로를 지정하여 해당 URL에 해당하는 요청만 Swagger API 문서로 만듭니다.(필수)
-                .paths(PathSelectors.any())
-                //.paths(PathSelectors.ant("/v1/**")) // v1 만 세팅할시 사용
+                //.paths(PathSelectors.any())
+                .paths(PathSelectors.ant("/v1/**")) // v1 만 세팅할시 사용
                 .build()
                 .useDefaultResponseMessages(false) // 기본으로 세팅되는 http 코드(200, 401, 403, 404 등) 메시지를 표시하지 않음.
         ;
