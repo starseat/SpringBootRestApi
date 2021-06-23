@@ -102,7 +102,7 @@ public class UserController {
                     value = "회원 번호", required = true,
                     name = "User Number", type = "long", example = "0"
             )
-            @RequestParam long msrl
+            @PathVariable long msrl
     ) {
         userJpaRepo.deleteById(msrl);
         return responseService.getSuccessResult();
