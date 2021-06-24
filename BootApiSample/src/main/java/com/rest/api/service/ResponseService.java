@@ -38,7 +38,7 @@ public class ResponseService {
     // 다중 결과 처리 메소드
     public <T> MultiResult<T> getMultiResult(List<T> list) {
         MultiResult<T> result = new MultiResult<>();
-        result.setList(list);
+        result.setData(list);
         setSuccessResult(result);
         return result;
     }
