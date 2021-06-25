@@ -31,7 +31,9 @@ public class UserController {
 //            @ApiResponse(code = 200, message = "The resource you were trying to reach is not found")
 //    })
 //    public List<User> findAllUser() { return userJpaRepo.findAll(); }
-    public MultiResult<User> findAllUser() {
+    public MultiResult<User> findAllUser(
+            @ApiParam(value = "언어", defaultValue = "ko") @RequestParam String lang
+    ) {
         return responseService.getMultiResult(userJpaRepo.findAll());
     }
 
@@ -43,7 +45,10 @@ public class UserController {
 //            @ApiResponse(code = 200, message = "Accessing the resource you were trying to reach is forbidden"),
 //            @ApiResponse(code = 200, message = "The resource you were trying to reach is not found")
 //    })
-    public SingleResult<User> findUserById(@ApiParam(value = "회원ID", required = true) @PathVariable long msrl) {
+    public SingleResult<User> findUserById(
+            @ApiParam(value = "회원ID", required = true) @PathVariable long msrl,
+            @ApiParam(value = "언어", defaultValue = "ko") @RequestParam String lang
+    ) {
         //return responseService.getSingleResult(userJpaRepo.findById(msrl).orElse(null));
         return responseService.getSingleResult(userJpaRepo.findById(msrl).orElseThrow(UserNotFoundException::new));
     }
@@ -58,7 +63,8 @@ public class UserController {
 //    })
     public SingleResult<User> save(
             @ApiParam(value = "회원 ID", required = true)  @RequestParam String uid,
-            @ApiParam(value = "회원 이름", required = true) @RequestParam String name
+            @ApiParam(value = "회원 이름", required = true) @RequestParam String name,
+            @ApiParam(value = "언어", defaultValue = "ko") @RequestParam String lang
     ) {
         User user = User.builder()
                 .uid(uid)
@@ -81,7 +87,8 @@ public class UserController {
                     name = "User Number", type = "long", example = "0"
             ) @RequestParam long msrl,
             @ApiParam(value = "회원 ID", required = true) @RequestParam String uid,
-            @ApiParam(value = "회원 이름", required = true) @RequestParam String name
+            @ApiParam(value = "회원 이름", required = true) @RequestParam String name,
+            @ApiParam(value = "언어", defaultValue = "ko") @RequestParam String lang
     ) {
         User user = User.builder()
                 .msrl(msrl)
@@ -104,7 +111,8 @@ public class UserController {
                     value = "회원 번호", required = true,
                     name = "User Number", type = "long", example = "0"
             )
-            @PathVariable long msrl
+            @PathVariable long msrl,
+            @ApiParam(value = "언어", defaultValue = "ko") @RequestParam String lang
     ) {
         userJpaRepo.deleteById(msrl);
         return responseService.getSuccessResult();

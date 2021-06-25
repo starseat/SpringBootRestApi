@@ -65,4 +65,13 @@ public class ResponseService {
         result.setMsg(CommonResponse.FAIL.getMsg());
         return result;
     }
+
+    // i18n 적용한 실패 결과 처리
+    public CommonResult getFailResult(int code, String msg) {
+        CommonResult result = new CommonResult();
+        result.setResult(Boolean.FALSE);
+        result.setCode(code);
+        result.setMsg(msg);
+        return result;
+    }
 }
