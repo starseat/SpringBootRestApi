@@ -1,6 +1,7 @@
 package com.rest.api.service;
 
 import com.rest.api.model.response.CommonResult;
+import com.rest.api.model.response.ListResult;
 import com.rest.api.model.response.MultiResult;
 import com.rest.api.model.response.SingleResult;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,14 @@ public class ResponseService {
     public <T> MultiResult<T> getMultiResult(List<T> list) {
         MultiResult<T> result = new MultiResult<>();
         result.setData(list);
+        setSuccessResult(result);
+        return result;
+    }
+
+    // 다중 결과 처리 메소드
+    public <T> ListResult<T> getListResult(List<T> list) {
+        ListResult<T> result = new ListResult<>();
+        result.setList(list);
         setSuccessResult(result);
         return result;
     }
