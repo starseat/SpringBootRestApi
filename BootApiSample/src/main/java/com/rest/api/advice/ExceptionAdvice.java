@@ -1,5 +1,7 @@
 package com.rest.api.advice;
 
+import com.rest.api.advice.exception.AuthenticationEntryPointException;
+import com.rest.api.advice.exception.EmailSigninFailedException;
 import com.rest.api.advice.exception.UserNotFoundException;
 import com.rest.api.model.response.CommonResult;
 import com.rest.api.service.ResponseService;
@@ -7,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -43,6 +46,34 @@ public class ExceptionAdvice {
                 getMessage("userNotFound.msg")
         );
     }
+
+    @ExceptionHandler(EmailSigninFailedException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult emailSigninFailed(HttpServletRequest request, EmailSigninFailedException e) {
+        return responseService.getFailResult(
+                Integer.valueOf(getMessage("emailSigninFailed.code")),
+                getMessage("emailSigninFailed.msg")
+        );
+    }
+
+    @ExceptionHandler(AuthenticationEntryPointException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public CommonResult authenticationEntryPointException(HttpServletRequest request, AuthenticationEntryPointException e) {
+        return responseService.getFailResult(
+                Integer.valueOf(getMessage("entryPointException.code")),
+                getMessage("entryPointException.msg"));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public CommonResult accessDeniedException(HttpServletRequest request, AccessDeniedException e) {
+        return responseService.getFailResult(
+                Integer.valueOf(getMessage("accessDenied.code")),
+                getMessage("accessDenied.msg")
+        );
+    }
+
+
 
     // code 정보에 해당하는 메시지 조회
     private String getMessage(String code) {
