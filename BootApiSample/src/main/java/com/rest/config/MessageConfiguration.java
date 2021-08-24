@@ -67,6 +67,8 @@ public class MessageConfiguration implements WebMvcConfigurer {
     public MessageSource messageSource(
             @Value("${spring.messages.basename}") String basename,
             @Value("${spring.messages.encoding}") String encoding
+//            @Value("${spring.messages.basename}") String basename,
+//            @Value("${spring.messages.encoding}") String encoding
     ) {
         YamlMessageSource yms = new YamlMessageSource();
         yms.setBasename(basename);
